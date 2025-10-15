@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>Voice Agent Test harness</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      This CDN points to the latest official release of Web Chat. If you need to test against Web Chat's latest bits, please refer to using Web Chat's latest bits:
+      https://github.com/microsoft/BotFramework-WebChat#how-to-test-with-web-chats-latest-bits
+    -->
+    <script crossorigin="anonymous" src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #webchat {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <iframe src="https://webchat.botframework.com/embed/botsvc-voicebot-westus?s=_628Q~fkRQPDOZ2L_ChjyYDqxoEgQucdYX6YKcFW" style="height: 502px; max-height: 502px;"></iframe>
+    <!--<div id="webchat" role="main"></div>+
+    <script>
+        // This is a helper function for fetching JSON resources.
+        async function fetchJSON(url, options = {}) {
+            const res = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    accept: 'application/json'
+                }
+            });
+
+            if (!res.ok) {
+                throw new Error(`Failed to fetch JSON due to ${res.status}`);
+            }
+
+            return await res.json();
+        }
+
+        (async function main() {
+            // This is for obtaining Direct Line token from the bot.
+            // The Direct Line token will be bound to a random user ID.
+            // In a production system, we should avoid using Direct Line secret to connect to the bot.
+            const { token } = await fetchJSON('/api/directline/token');
+
+            WebChat.renderWebChat(
+                {
+                    directLine: WebChat.createDirectLine({ token }),
+                    styleOptions: {
+                        backgroundColor: 'rgba(255, 255, 255, .8)'
+                    }
+                },
+                document.getElementById('webchat')
+            );
+        })().catch(err => console.error(err));
+    </script>-->
+</body>
+</html>

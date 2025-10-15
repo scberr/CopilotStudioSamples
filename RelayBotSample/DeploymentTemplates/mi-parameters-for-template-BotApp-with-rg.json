@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appServiceName": {
+      "value": "appsvc-voiceagent-westus"
+    },
+    "existingAppServicePlanName": {
+      "value": "hp-voiceagent-westus"
+    },
+    "existingAppServicePlanLocation": {
+      "value": "westus"
+    },
+    "newAppServicePlanName": {
+      "value": ""
+    },
+    "newAppServicePlanLocation": {
+      "value": ""
+    },
+    "newAppServicePlanSku": {
+      "value": {
+        "name": "",
+        "tier": "",
+        "size": "",
+        "family": ""        
+      }
+    },
+    "appType": {
+      "value": "UserAssignedMSI"
+    },
+    "appId": {
+      "value": "6953d8ee-94b2-477a-a3be-ce73e4c25bc2"
+    },
+    "appSecret": {
+      "value": ""
+    },
+    "UMSIName": {
+      "value": "id-voiceagent-westus"
+    },
+    "UMSIResourceGroupName": {
+      "value": "rg-voiceagent-westus"
+    },
+    "tenantId": {
+      "value": "1c070306-c795-4742-ad65-a40d44b872a5"
+    }
+  }
+}

@@ -1,14 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
+    <SignAssembly>False</SignAssembly>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <ApplicationInsightsResourceId>/subscriptions/4da81fc7-331a-4c96-884a-7ab38058ebfc/resourcegroups/rg-voiceagent-westus/providers/microsoft.insights/components/appin-voiceagent-westus</ApplicationInsightsResourceId>
+    <UserSecretsId>635e86d1-54cd-4cec-9d3b-94dab8010000</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.5.1" />
+    <PackageReference Include="Azure.Identity" Version="1.17.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.23.0" />
     <PackageReference Include="Microsoft.Bot.Connector.DirectLine" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.ApplicationInsights" Version="2.23.0" />
   </ItemGroup>
 
   <ItemGroup>

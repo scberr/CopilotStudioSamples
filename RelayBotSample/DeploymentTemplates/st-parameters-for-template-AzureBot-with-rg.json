@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "azureBotId": {
+      "value": "botsvc-voiceagent-st-westus"
+    },
+    "azureBotSku": {
+      "value": "S1"
+    },
+    "azureBotRegion": {
+      "value": "westus"
+    },
+    "botEndpoint": {
+      "value": "https://appsvc-voiceagent-st-westus.azurewebsites.net/api/messages"
+    },
+    "appType": {
+      "value": "SingleTenant"
+    },
+    "appId": {
+      "value": "5e654eea-fc77-4f65-b49e-fa7a61e7c98f"
+    },
+    "UMSIName": {
+      "value": ""
+    },
+    "UMSIResourceGroupName": {
+      "value": ""
+    },
+    "tenantId": {
+      "value": "1c070306-c795-4742-ad65-a40d44b872a5"
+    }
+  }
+}

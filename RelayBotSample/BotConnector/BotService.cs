@@ -39,7 +39,7 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
             {
                 httpRequest.Method = HttpMethod.Get;
                 UriBuilder uriBuilder = new UriBuilder(TokenEndPoint);
-                uriBuilder.Query = $"botId={BotId}&tenantId={TenantId}";
+                uriBuilder.Query = $"botId={BotId}&tenantId={TenantId}&api-version=2022-03-01-preview";
                 httpRequest.RequestUri = uriBuilder.Uri;
                 using (var response = await s_httpClient.SendAsync(httpRequest))
                 {
@@ -47,7 +47,7 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
                     token = SafeJsonConvert.DeserializeObject<DirectLineToken>(responseString).Token;
                 }
             }
-
+            
             return token;
         }
     }

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.PowerVirtualAgents.Samples.RelayBotSample.Bots;
 
 namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
@@ -24,7 +24,7 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddControllers();
 
             // Create the Bot Framework Adapter with error handling enabled.
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
@@ -34,17 +34,29 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
 
             // Create the singleton instance of BotService from appsettings
             var botService = new BotService();
-            Configuration.Bind("BotService", (object)botService);
+            Configuration.GetSection("BotService").Bind(botService);
             services.AddSingleton<IBotService>(botService);
 
             // Create the singleton instance of ConversationPool from appsettings
             var conversationManager = new ConversationManager();
-            Configuration.Bind("ConversationPool", conversationManager);
+            Configuration.GetSection("ConversationPool").Bind(conversationManager);
             services.AddSingleton(conversationManager);
+
+            // If using Kestrel:
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+            // If using IIS:
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -53,12 +65,17 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
             else
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseRouting();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
