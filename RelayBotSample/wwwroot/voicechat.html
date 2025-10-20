@@ -9,15 +9,18 @@
         body {
             height: 100%;
         }
+
         body {
             margin: 0;
         }
+
         #webchat {
             height: 100%;
             width: 100%;
         }
     </style>
 </head>
+
 <body>
     <div id="webchat" role="main"></div>
     <script>
@@ -46,7 +49,7 @@
 
             const adapters = await window.WebChat.createDirectLineSpeechAdapters({
                 fetchCredentials: {
-                    subscriptionKey: '',
+                    subscriptionKey: 'CJbjto8leHpBqhgXyvKaVV6x22J7Vi80ApP49ne1BCYTOGFDAKw8JQQJ99BJAC4f1cMXJ3w3AAAYACOGIPU9',
                     region: 'westus'
                 }
             });
@@ -57,7 +60,7 @@
                 },
                 document.getElementById('webchat')
             );
-
+            
             document.querySelector('#webchat > *').focus();
 
         })().catch(err => console.error(err));

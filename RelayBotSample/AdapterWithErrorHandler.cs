@@ -7,8 +7,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
 {
-    public class AdapterWithErrorHandler : BotFrameworkHttpAdapter
+    public class AdapterWithErrorHandler : CloudAdapter
     {
+        public AdapterWithErrorHandler(IConfiguration configuration, ILogger<CloudAdapter> logger)
+            : base(configuration, null, logger)
+        {
+            OnTurnError = async (turnContext, exception) =>
+            {
+                // Log any leaked exception from the application.
+                logger.LogError($"Exception caught : {exception.ToString()}");
+
+                // Send a catch-all apology to the user.
+                await turnContext.SendActivityAsync("Sorry, it looks like something went wrong.");
+            };
+        }
+        /*
         public AdapterWithErrorHandler(IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger)
             : base(configuration, logger)
         {
@@ -20,6 +33,6 @@ namespace Microsoft.PowerVirtualAgents.Samples.RelayBotSample
                 // Send a catch-all apology to the user.
                 await turnContext.SendActivityAsync("Sorry, it looks like something went wrong.");
             };
-        }
+        }*/
     }
 }
