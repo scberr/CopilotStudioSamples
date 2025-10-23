@@ -25,44 +25,40 @@
     <div id="webchat" role="main"></div>
     <script>
         (async function () {
-            // In this demo, we are using Direct Line Speech token from MockBot.
+            // In this demo, we are using Direct Line token from MockBot.
             // Your client code must provide either a secret or a token to talk to your bot.
-            // Tokens are more secure. To learn about the differences between secrets and tokens
+            // Tokens are more secure. To learn about the differences between secrets and tokens.
             // and to understand the risks associated with using secrets, visit https://docs.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-direct-line-3-0-authentication?view=azure-bot-service-4.0
 
-            // This function will fetch speech token from a server.
-            // In our server, we call Cognitive Services to exchange subscription key into authorization token.
-            // Visit https://docs.microsoft.com/en-us/azure/cognitive-services/authentication for more details.
-            //const fetchCredentials = async () => {
-            //    //const res = await fetch('https://as-relaybot-westus-cga3dkeggef4h6dc.westus-01.azurewebsites.net/speechservices/token', {
-            //    //    method: 'POST'
-            //    //});
-            //    //if (!res.ok) {
-            //    //    throw new Error('Failed to fetch authorization token and region.');
-            //    //}
 
-            //    //const { region, token: authorizationToken } = await res.json();
+            const res = await fetch(
+                'https://6d2aaa38fdc3e9c681fe04d97a63d8.01.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr56c_echoAgent/directline/token?api-version=2022-03-01-preview',
+                { method: 'GET' }
+            );
+            responseJson = await res.json();
 
-            //    return { authorizationToken: '', region : 'westus' };
-
-            //};
-
-            const adapters = await window.WebChat.createDirectLineSpeechAdapters({
-                fetchCredentials: {
+            // Create the ponyfill factory function, which can be called to create a concrete implementation of the ponyfill.
+            const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory({
+                // We are passing the Promise function to the "credentials" field.
+                // This function will be called every time the token is being used.
+                credentials: {
                     subscriptionKey: 'CJbjto8leHpBqhgXyvKaVV6x22J7Vi80ApP49ne1BCYTOGFDAKw8JQQJ99BJAC4f1cMXJ3w3AAAYACOGIPU9',
                     region: 'westus'
                 }
             });
 
+            // Pass a Web Speech ponyfill factory to renderWebChat.
+            // You can also use your own speech engine given it is compliant to W3C Web Speech API: https://w3c.github.io/speech-api/.
+            // For implementor, look at createBrowserWebSpeechPonyfill.js for details.
             window.WebChat.renderWebChat(
                 {
-                    ...adapters
+                    directLine: window.WebChat.createDirectLine({ token: responseJson.token }),
+                    webSpeechPonyfillFactory
                 },
                 document.getElementById('webchat')
             );
-            
-            document.querySelector('#webchat > *').focus();
 
+            document.querySelector('#webchat > *').focus();
         })().catch(err => console.error(err));
     </script>
 </body>
